@@ -1,5 +1,31 @@
 {
   "devDependencies": {
     "typescript": "^4.7.2"
+  },
+  "name": "falling-slot",
+  "version": "1.0.0",
+  "description": "Slot consists of 5 columns of symbols and a spin button. Falling symbols should be cut by a mask on top",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "falling-slot"
+  ],
+  "author": "Vadzim Shypko",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^17.0.35",
+    "@types/pixi.js": "^5.0.0",
+    "browser-sync": "^2.27.10",
+    "browserify": "^17.0.0",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "pixi.js": "^6.3.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
