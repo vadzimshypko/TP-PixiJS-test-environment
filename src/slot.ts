@@ -11,7 +11,6 @@ export class Slot {
         this._path = path;
         this._name = pathTool.basename(path);
         this._sprite = null;
-        console.log(path + " : " + this._name);
     }
 
     get sprite(): Sprite | null {

@@ -42,4 +42,8 @@ export class Field {
             }
         }
     }
+
+    public startAnimate() : void {
+        // TODO
+    }
 }
