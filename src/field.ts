@@ -43,7 +43,8 @@ export class Field {
         }
     }
 
-    public startAnimate() : void {
+    public startAnimate(callback : Function) : void {
         // TODO
+        setTimeout(() => callback(), 5000);
     }
 }

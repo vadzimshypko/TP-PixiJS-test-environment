@@ -11,61 +11,72 @@ export class SpinButton {
     private button: Sprite;
     private textures: Texture[];
     private startAnimate: Function;
-    private _stage: Stage = 2;
+    private _stage: Stage = Stage.normal;
+
+    private cursorIsUnder : boolean = false;
 
     constructor(sprite: Sprite, textures: Texture[], startAnimate: Function) {
         this.button = sprite;
         this.textures = textures;
         this.startAnimate = startAnimate;
-
         this.button.interactive = true;
         this.button.buttonMode = true;
         this.button
-            .on('pointerdown', this.onButtonDown)
-            .on('pointerup', this.onButtonUp)
-            .on('pointerupoutside', this.onButtonUp)
-            .on('pointerover', this.onButtonOver)
-            .on('pointerout', this.onButtonOut);
-    }
-
-    set stage(value: Stage) {
-        this.button.texture = this.textures[value];
-        this._stage = value;
-        console.log(this._stage);
+            .on('pointerdown', () => this.onButtonDown())
+            .on('pointerup', () => this.onButtonUp())
+            //.on('pointerupoutside', () => this.onButtonUp())
+            .on('pointerover', () => this.onButtonOver())
+            .on('pointerout', () => this.onButtonOut());
     }
 
     private onButtonOut() {
-        switch (this._stage) {
-            case Stage.normal:
-                this._stage = Stage.hover;
+        this.cursorIsUnder = false;
+        switch (this.stage) {
+            case Stage.hover:
+            case Stage.pressed:
+                this.stage = Stage.normal;
                 break;
         }
     }
 
     private onButtonOver() {
-        switch (this._stage) {
-            case Stage.hover:
-                this._stage = Stage.normal;
+        this.cursorIsUnder = true;
+        switch (this.stage) {
+            case Stage.normal:
+                this.stage = Stage.hover;
                 break;
         }
     }
 
     private onButtonUp() {
-        switch (this._stage) {
-            case Stage.hover:
+        switch (this.stage) {
             case Stage.pressed:
-            case Stage.normal:
-                this._stage = Stage.disabled;
+                if (this.cursorIsUnder) {
+                    this.stage = Stage.disabled;
+                    this.startAnimate(() => {
+                        this.stage = this.cursorIsUnder ? Stage.hover : Stage.normal;
+                    });
+                } else {
+                  this.stage = Stage.normal;
+                }
                 break;
         }
     }
 
     private onButtonDown() {
-        switch (this._stage) {
+        switch (this.stage) {
             case Stage.hover:
-            case Stage.normal:
-                this._stage = Stage.pressed;
+                this.stage = Stage.pressed;
                 break;
         }
+    }
+
+    private set stage(value: Stage) {
+        this.button.texture = this.textures[value];
+        this._stage = value;
+        console.log("new stage: " + this._stage.toString());
+    }
+    private get stage() : Stage {
+        return this._stage;
     }
 }
